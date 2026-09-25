@@ -7,6 +7,7 @@ import { api } from "../../lib/api";
 type Entity = {
   id: string;
   name?: string;
+  type?: string;
   title?: string;
   url?: string;
 };
@@ -118,8 +119,18 @@ export default function CreateMoviePage() {
           year: Number(prize.year),
         }),
       });
+setProgress("3/6 Creando trailer auxiliar...");
 
-      setProgress("3/5 Creando película...");
+const createdTrailer = await api<Created>("/youtube-trailers", {
+  method: "POST",
+  body: JSON.stringify({
+    name: `Trailer de ${movie.title}`,
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    duration: 120,
+    channel: "CineArte",
+  }),
+});
+      setProgress("4/6 Creando película...");
 
       const createdMovie = await api<Created>("/movies", {
         method: "POST",
@@ -137,12 +148,12 @@ export default function CreateMoviePage() {
             id: directorId,
           },
           youtubeTrailer: {
-            id: trailerId,
-          },
+  id: createdTrailer.id,
+},
         }),
       });
 
-      setProgress("4/5 Asociando actor con película...");
+      setProgress("5/6 Asociando actor con película...");
 
       await api(
         `/actors/${createdActor.id}/movies/${createdMovie.id}`,
@@ -151,7 +162,7 @@ export default function CreateMoviePage() {
         }
       );
 
-      setProgress("5/5 Asociando premio con película...");
+      setProgress("6/6 Asociando premio con película...");
 
       await api(
         `/movies/${createdMovie.id}/prizes/${createdPrize.id}`,
@@ -303,7 +314,7 @@ export default function CreateMoviePage() {
               >
                 {genres.map((genre, index) => (
                   <option key={genre.id} value={genre.id}>
-                    {genre.name || `Género ${index + 1}`}
+                    {genre.type || genre.name || `Género ${index + 1}`}
                   </option>
                 ))}
               </select>
@@ -528,3 +539,4 @@ export default function CreateMoviePage() {
     </main>
   );
 }
+

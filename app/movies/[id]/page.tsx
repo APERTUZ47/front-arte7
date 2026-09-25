@@ -23,6 +23,7 @@ type Prize = {
 type NamedEntity = {
   id?: string;
   name?: string;
+  type?: string;
 };
 
 type Trailer = {
@@ -121,7 +122,7 @@ export default function MovieDetailPage() {
             <div className="detailTags">
               <span>{movie.duration} min</span>
               <span>
-                {movie.genre?.name || "Sin género"}
+                {movie.genre?.type || movie.genre?.name || "Sin género"}
               </span>
               <span>
                 Popularidad {movie.popularity}
@@ -257,7 +258,7 @@ export default function MovieDetailPage() {
             <div>
               <span>Género</span>
               <strong>
-                {movie.genre?.name || "No registrado"}
+                {movie.genre?.type || movie.genre?.name || "No registrado"}
               </strong>
             </div>
 
@@ -281,3 +282,4 @@ export default function MovieDetailPage() {
     </main>
   );
 }
+
