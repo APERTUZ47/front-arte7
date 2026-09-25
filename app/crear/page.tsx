@@ -1,18 +1,29 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import ActorForm from "../../components/ActorForm";
 
 export default function CrearActorPage() {
   return (
-    <main>
-      <h1>Crear Actor</h1>
+    <main className="page-container">
+      <div className="form-card">
+        <div className="form-header">
+          <h1>Crear Actor</h1>
 
-      <Link href="/actors">
-        Volver a actores
-      </Link>
+          <p>
+            Agrega un nuevo actor a la plataforma.
+          </p>
+        </div>
 
-      <hr />
+        <ActorForm />
 
-      <ActorForm />
+        <div style={{ marginTop: "20px" }}>
+          <Link
+            href="/actors"
+            className="secondary-button"
+          >
+            Volver a actores
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }

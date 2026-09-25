@@ -19,47 +19,54 @@ export default function ActorCard({
   onDelete,
 }: Props) {
   return (
-    <div>
-      <h2>{actor.name}</h2>
-
-      {actor.photo && (
+    <article className="actor-card">
+      <div className="actor-image-wrapper">
         <img
+          className="actor-image"
           src={actor.photo}
           alt={actor.name}
-          width="150"
         />
-      )}
+      </div>
 
-      <p>
-        Nacionalidad: {actor.nationality}
-      </p>
+      <div className="actor-content">
+        <h2 className="actor-name">
+          {actor.name}
+        </h2>
 
-      <p>
-        Fecha de nacimiento:{" "}
-        {new Date(
-          actor.birthDate
-        ).toLocaleDateString()}
-      </p>
+        <p className="actor-info">
+          <strong>Nacionalidad:</strong>{" "}
+          {actor.nationality}
+        </p>
 
-      <p>{actor.biography}</p>
+        <p className="actor-info">
+          <strong>Fecha de nacimiento:</strong>{" "}
+          {new Date(
+            actor.birthDate
+          ).toLocaleDateString()}
+        </p>
 
-      <Link
-        href={`/editar/${actor.id}`}
-      >
-        Editar
-      </Link>
+        <p className="actor-biography">
+          {actor.biography}
+        </p>
 
-      {" "}
+        <div className="actor-actions">
+          <Link
+            className="secondary-button"
+            href={`/editar/${actor.id}`}
+          >
+            Editar
+          </Link>
 
-      <button
-        onClick={() =>
-          onDelete(actor.id)
-        }
-      >
-        Eliminar
-      </button>
-
-      <hr />
-    </div>
+          <button
+            className="danger-button"
+            onClick={() =>
+              onDelete(actor.id)
+            }
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }

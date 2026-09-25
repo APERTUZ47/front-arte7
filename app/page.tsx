@@ -1,42 +1,32 @@
-"use client";
+﻿import Link from "next/link";
 
-import { useEffect, useState } from "react";
-
-type Actor = {
-  id: string;
-  name: string;
-  photo: string;
-  nationality: string;
-  birthDate: string;
-  biography: string;
-};
-
-export default function ActorsPage() {
-  const [actors, setActors] = useState<Actor[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/v1/actors")
-      .then((response) => response.json())
-      .then((data) => {
-        setActors(data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener actores:", error);
-      });
-  }, []);
-
+export default function Home() {
   return (
-    <main>
-      <h1>Actores</h1>
+    <main className="home-container">
+      <div className="home-card">
+        <h1>Actor Manager</h1>
 
-      {actors.map((actor) => (
-        <div key={actor.id}>
-          <h2>{actor.name}</h2>
-          <p>Nacionalidad: {actor.nationality}</p>
-          <p>Fecha de nacimiento: {actor.birthDate}</p>
-          <p>{actor.biography}</p>
+        <p>
+          Aplicación CRUD desarrollada con Next.js
+          para administrar actores de forma sencilla.
+        </p>
+
+        <div className="home-actions">
+          <Link
+            href="/actors"
+            className="primary-button"
+          >
+            Ver actores
+          </Link>
+
+          <Link
+            href="/crear"
+            className="secondary-button"
+          >
+            Crear actor
+          </Link>
         </div>
-      ))}
+      </div>
     </main>
   );
 }

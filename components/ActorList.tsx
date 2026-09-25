@@ -19,11 +19,15 @@ export default function ActorList({
   onDelete,
 }: Props) {
   if (actors.length === 0) {
-    return <p>No hay actores.</p>;
+    return (
+      <div className="empty-message">
+        No hay actores disponibles.
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="actors-grid">
       {actors.map((actor) => (
         <ActorCard
           key={actor.id}
